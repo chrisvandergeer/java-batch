@@ -8,15 +8,4 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
-<!--    <servlet>-->
-<!--        <servlet-name>UploadBestandServlet</servlet-name>-->
-<!--        <servlet-class>nl.cge.example.javabatch.boundary.UploadBestandServlet</servlet-class>-->
-<!--        <multipart-config>-->
-<!--            -->
-<!--        </multipart-config>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>UploadBestandServlet</servlet-name>-->
-<!--        <url-pattern>/uploadBestand</url-pattern>-->
-<!--    </servlet-mapping>-->
 </web-app>

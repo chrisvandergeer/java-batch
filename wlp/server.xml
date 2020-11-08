@@ -34,7 +34,8 @@
     <httpEndpoint id="defaultHttpEndpoint" httpPort="9080" httpsPort="9443" />
     <dataSource id="DefaultDataSource" jndiName="jdbc/derbyEmbedded">
         <jdbcDriver libraryRef="DerbyLib" />
-        <properties.derby.embedded databaseName="/users/chris/Data/java-batch-example-db" createDatabase="create" />
+<!--        <properties.derby.embedded databaseName="memory:defaultdb" createDatabase="create" user="dbuser" password="dbpass"/>-->
+        <properties.derby.embedded databaseName="/users/chris/Data/derby-java-batch" createDatabase="create" />
     </dataSource>
     <library id="DerbyLib">
         <fileset dir="/Users/chris/Apps/db-derby-10.14.2.0-bin/lib" />
