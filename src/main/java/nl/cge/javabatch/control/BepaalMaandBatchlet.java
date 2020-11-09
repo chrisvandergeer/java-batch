@@ -5,9 +5,12 @@ import nl.cge.javabatch.entity.TijdWerkRegistratie;
 
 import javax.batch.api.AbstractBatchlet;
 import javax.batch.runtime.BatchStatus;
+import javax.batch.runtime.context.JobContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 import static nl.cge.javabatch.entity.TijdWerkRegistratie.*;
@@ -19,13 +22,16 @@ public class BepaalMaandBatchlet extends AbstractBatchlet {
     @PersistenceContext(name = "pu-java-batch")
     private EntityManager entityManager;
 
+    @Inject
+    JobContext jobContext;
+
     @Override
     public String process() throws Exception {
         log.info("Batchjob started");
-        List<TijdWerkRegistratie> resultList = entityManager.createNamedQuery(TWR_FIND_OUDSTE_GEREGISTREERD, TijdWerkRegistratie.class)
-                .getResultList();
-        log.info("Aantal : " + resultList.size());
-        resultList.forEach(log::info);
+        LocalDate oudsteTeVerwerkenDatum = entityManager.createNamedQuery(QRY_DATUM_OUDSTE_GEREGISTREERDE, LocalDate.class).getSingleResult();
+        log.info("Oudste datum : " + oudsteTeVerwerkenDatum);
+        jobContext.getProperties().setProperty("oudsteDatum", oudsteTeVerwerkenDatum.toString());
+        jobContext.setTransientUserData(oudsteTeVerwerkenDatum);
         return BatchStatus.COMPLETED.toString();
     }
 }

@@ -13,11 +13,14 @@ import java.time.LocalDate;
                         "where t.status = nl.cge.javabatch.entity.TijdWerkRegistratie.Status.GEREGISTREERD " +
                         "and t.datum = (select min(it.datum) " +
                         "from TijdWerkRegistratie it " +
-                        "where it.status = nl.cge.javabatch.entity.TijdWerkRegistratie.Status.GEREGISTREERD)")
+                        "where it.status = nl.cge.javabatch.entity.TijdWerkRegistratie.Status.GEREGISTREERD)"),
+        @NamedQuery(name = TijdWerkRegistratie.QRY_DATUM_OUDSTE_GEREGISTREERDE,
+                query = "select min(t.datum) from TijdWerkRegistratie t where t.status = nl.cge.javabatch.entity.TijdWerkRegistratie.Status.GEREGISTREERD")
 })
 public class TijdWerkRegistratie {
 
     public static final String TWR_FIND_OUDSTE_GEREGISTREERD = "TijdWerkRegistratie.findOudsteGeregistreerd";
+    public static final String QRY_DATUM_OUDSTE_GEREGISTREERDE = "TijdwerkRegistratie.datumOudsteGeregistreerde";
 
     enum Status {GEREGISTREERD, GOEDGEKEURD, UITBETAALD}
 
