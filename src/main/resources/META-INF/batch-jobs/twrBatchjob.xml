@@ -1,0 +1,7 @@
+<job id="twrBatchjob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+
+    <step id="bepaalMaand">
+        <batchlet ref="bepaalMaandBatchlet"></batchlet>
+    </step>
+
+</job>
