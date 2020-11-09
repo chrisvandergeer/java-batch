@@ -1,6 +1,7 @@
 package nl.cge.javabatch.entity;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,9 +17,13 @@ public class TijdWerkRegistratie {
     private Long id;
 
     private LocalDate datum;
+
+    private Integer gewerkteUren;
+
     @ManyToOne
     private Medewerker medewerker;
+
     @Enumerated(value = EnumType.STRING)
-    private Status status;
+    private Status status = Status.GEREGISTREERD;
 
 }
