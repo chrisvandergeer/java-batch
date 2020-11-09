@@ -1,5 +1,6 @@
 package nl.cge.common;
 
+import lombok.extern.log4j.Log4j2;
 import nl.cge.javabatch.entity.Medewerker;
 import nl.cge.javabatch.entity.TijdWerkRegistratie;
 
@@ -15,10 +16,11 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import static java.time.temporal.TemporalAdjusters.*;
+import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 
 @Startup
 @Singleton
+@Log4j2
 public class InitializationBean {
 
     private static final int AANTAL_MEDEWERKERS = 500;
@@ -30,28 +32,37 @@ public class InitializationBean {
 
     @PostConstruct
     public void init() {
-        System.out.println("Init started");
+        log.info("Init started");
         createMedewerkers();
-        createTijdWerkRegistratie();
-        System.out.println("Init ready");
+        createTijdWerkRegistraties();
+        log.info("Init ready");
     }
 
-    private void createTijdWerkRegistratie() {
+    private void createTijdWerkRegistraties() {
         IntStream.range(1, AANTAL_MEDEWERKERS).forEach(i -> {
             String medewerkersnummer = String.format("%06d", i);
-            Medewerker medewerker = entityManager.createNamedQuery(Medewerker.QRY_FIND_BY_MEDEWERKERSNUMMER, Medewerker.class)
-                    .setParameter("medewerkersnummer", medewerkersnummer)
-                    .getSingleResult();
+            Medewerker medewerker = findMedewerker(medewerkersnummer);
             LocalDate twrDatum = getNextWorkingDay(START_DATM);
             while (twrDatum.isBefore(LocalDate.now())) {
-                TijdWerkRegistratie twr = new TijdWerkRegistratie();
-                twr.setDatum(twrDatum);
-                twr.setGewerkteUren(randomGewerkteUren());
-                twr.setMedewerker(medewerker);
+                TijdWerkRegistratie twr = createTijdWerkRegistratie(medewerker, twrDatum);
                 entityManager.persist(twr);
                 twrDatum = getNextWorkingDay(twrDatum);
             }
         });
+    }
+
+    private Medewerker findMedewerker(String medewerkersnummer) {
+        return entityManager.createNamedQuery(Medewerker.QRY_FIND_BY_MEDEWERKERSNUMMER, Medewerker.class)
+                .setParameter("medewerkersnummer", medewerkersnummer)
+                .getSingleResult();
+    }
+
+    private TijdWerkRegistratie createTijdWerkRegistratie(Medewerker medewerker, LocalDate twrDatum) {
+        TijdWerkRegistratie twr = new TijdWerkRegistratie();
+        twr.setDatum(twrDatum);
+        twr.setGewerkteUren(randomGewerkteUren());
+        twr.setMedewerker(medewerker);
+        return twr;
     }
 
     private LocalDate getNextWorkingDay(LocalDate today) {
