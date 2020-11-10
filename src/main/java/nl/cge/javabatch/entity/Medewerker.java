@@ -1,7 +1,6 @@
 package nl.cge.javabatch.entity;
 
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -9,12 +8,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @NamedQueries(value = {
-        @NamedQuery(name = Medewerker.QRY_FIND_BY_MEDEWERKERSNUMMER,
-                query = "select m from Medewerker m where m.medewerkersnummer = :medewerkersnummer")
+        @NamedQuery(name = Medewerker.QRY_BY_MEDEWERKERSNUMMER,
+                query = "select m from Medewerker m where m.medewerkersnummer = :medewerkersnummer"),
+        @NamedQuery(
+                name = Medewerker.QRY_BY_DATERANGE_STATUS_GEREGISTREERD,
+                query = "select m from TijdWerkRegistratie t join t.medewerker m " +
+                        "where t.datum >= :begindatum " +
+                        "and t.datum <= :einddatum " +
+                        "and t.status = nl.cge.javabatch.entity.TijdWerkRegistratie.Status.GEREGISTREERD")
 })
 public class Medewerker {
 
-    public static final String QRY_FIND_BY_MEDEWERKERSNUMMER = "Medewerker.findByMedewerkersnummer";
+    public static final String QRY_BY_MEDEWERKERSNUMMER = "Medewerker.findByMedewerkersnummer";
+    public static final String QRY_BY_DATERANGE_STATUS_GEREGISTREERD = "TijdwerkRegistratie.findByDaterangeAndStatusGeregistreerd";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

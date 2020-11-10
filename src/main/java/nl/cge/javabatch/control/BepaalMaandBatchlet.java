@@ -1,7 +1,7 @@
 package nl.cge.javabatch.control;
 
 import lombok.extern.log4j.Log4j2;
-import nl.cge.javabatch.entity.TijdWerkRegistratie;
+import nl.cge.javabatch.entity.PeriodeTotaal;
 
 import javax.batch.api.AbstractBatchlet;
 import javax.batch.runtime.BatchStatus;
@@ -11,9 +11,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.util.List;
 
-import static nl.cge.javabatch.entity.TijdWerkRegistratie.*;
+import static nl.cge.javabatch.entity.TijdWerkRegistratie.QRY_DATUM_OUDSTE_GEREGISTREERDE;
 
 @Log4j2
 @Named
@@ -27,11 +26,12 @@ public class BepaalMaandBatchlet extends AbstractBatchlet {
 
     @Override
     public String process() throws Exception {
-        log.info("Batchjob started");
+        log.info("BepaalMaandBatchlet started");
         LocalDate oudsteTeVerwerkenDatum = entityManager.createNamedQuery(QRY_DATUM_OUDSTE_GEREGISTREERDE, LocalDate.class).getSingleResult();
         log.info("Oudste datum : " + oudsteTeVerwerkenDatum);
-        jobContext.getProperties().setProperty("oudsteDatum", oudsteTeVerwerkenDatum.toString());
-        jobContext.setTransientUserData(oudsteTeVerwerkenDatum);
+        jobContext.getProperties().setProperty("oudsteTeVerwerkenDatum", oudsteTeVerwerkenDatum.toString());
+        jobContext.setTransientUserData(new PeriodeTotaal(oudsteTeVerwerkenDatum));
+        log.info("BepaalMaandBatchlet finished");
         return BatchStatus.COMPLETED.toString();
     }
 }

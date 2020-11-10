@@ -5,7 +5,7 @@
     </step>
 
     <step id="verwerkMedewerkerTwr">
-        <chunk item-count="1">
+        <chunk item-count="100">
             <reader ref="medewerkerTwrItemReader"></reader>
             <processor ref="medewerkerTwrItemProcessor"></processor>
             <writer ref="medewerkerTwrItemWriter"></writer>

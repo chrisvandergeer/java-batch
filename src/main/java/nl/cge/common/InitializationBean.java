@@ -23,7 +23,7 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 @Log4j2
 public class InitializationBean {
 
-    private static final int AANTAL_MEDEWERKERS = 500;
+    private static final int AANTAL_MEDEWERKERS = 100;
     private static final LocalDate START_DATM = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).minusDays(1);
     private static final Random RANDOM = new Random(new Date().getTime());
 
@@ -52,7 +52,7 @@ public class InitializationBean {
     }
 
     private Medewerker findMedewerker(String medewerkersnummer) {
-        return entityManager.createNamedQuery(Medewerker.QRY_FIND_BY_MEDEWERKERSNUMMER, Medewerker.class)
+        return entityManager.createNamedQuery(Medewerker.QRY_BY_MEDEWERKERSNUMMER, Medewerker.class)
                 .setParameter("medewerkersnummer", medewerkersnummer)
                 .getSingleResult();
     }
