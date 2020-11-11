@@ -1,4 +1,4 @@
-package nl.cge.javabatch.control;
+package nl.cge.javabatch.batch;
 
 import nl.cge.javabatch.entity.PeriodeTotaal;
 import nl.cge.javabatch.entity.TijdWerkRegistratie;

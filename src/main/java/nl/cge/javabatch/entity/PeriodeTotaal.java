@@ -6,12 +6,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
 
 @Data
 @NoArgsConstructor
 @Entity
+@NamedQueries(value = {
+        @NamedQuery(
+                name = PeriodeTotaal.QRY_FIND_BY_BEGINDATUM,
+                query = "select p from PeriodeTotaal p where p.begindatum = :begindatum"
+        )
+})
 public class PeriodeTotaal {
+
+    public static final String QRY_FIND_BY_BEGINDATUM = "PeriodeTotaal.findByBegindatum";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,9 +28,9 @@ public class PeriodeTotaal {
     private LocalDate einddatum;
     private BigDecimal totaalBedrag;
 
-    public PeriodeTotaal(LocalDate datum) {
-        begindatum = datum.with(TemporalAdjusters.firstDayOfMonth());
-        einddatum = datum.with(TemporalAdjusters.lastDayOfMonth());
+    public PeriodeTotaal(LocalDate begindatum, LocalDate einddatum) {
+        this.begindatum = begindatum;
+        this.einddatum = einddatum;
         totaalBedrag = BigDecimal.ZERO;
     }
 

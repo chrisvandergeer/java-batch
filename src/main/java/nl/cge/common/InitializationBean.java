@@ -24,7 +24,7 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 public class InitializationBean {
 
     private static final int AANTAL_MEDEWERKERS = 100;
-    private static final LocalDate START_DATM = LocalDate.now().minusMonths(3).with(firstDayOfMonth()).minusDays(1);
+    private static final LocalDate START_DATM = LocalDate.now().minusMonths(6).with(firstDayOfMonth()).minusDays(1);
     private static final Random RANDOM = new Random(new Date().getTime());
 
     @PersistenceContext(name = "pu-java-batch")
@@ -33,9 +33,19 @@ public class InitializationBean {
     @PostConstruct
     public void init() {
         log.info("Init started");
-        createMedewerkers();
-        createTijdWerkRegistraties();
+        if (databaseIsEmpty()) {
+            createMedewerkers();
+            createTijdWerkRegistraties();
+        } else {
+            log.info("Nothing to init, database already filled");
+        }
         log.info("Init ready");
+    }
+
+    private boolean databaseIsEmpty() {
+        Long aantalGevondenRijen = entityManager.createQuery("select count(m.id) from Medewerker m", Long.class)
+                .getSingleResult();
+        return aantalGevondenRijen == 0;
     }
 
     private void createTijdWerkRegistraties() {
