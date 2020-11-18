@@ -24,6 +24,7 @@ public class Persoon {
 
     public static final String QRY_FIND_UPPERCASE_NAMEN = "Persoon.findUpperCaseNamen";
     public static final String QRY_FIND_LOWERCASE_NAMEN = "Persoon.findLowercaseNamen";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

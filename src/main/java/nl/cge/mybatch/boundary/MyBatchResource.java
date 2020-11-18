@@ -38,13 +38,6 @@ public class MyBatchResource {
         return Response.ok(jobExecutionDtoList).build();
     }
 
-    @POST
-    public Response startBatch() {
-        JobOperator jobOperator = BatchRuntime.getJobOperator();
-        jobOperator.start("myBatchjob", new Properties());
-        return getJobInfo();
-    }
-
     @Path("persoon")
     @GET
     public Response findPersonen() {
