@@ -1,34 +1,4 @@
 <job id="myBatchjob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
 
-    <step id="myBatchletStep" next="myUpperOrLowerDecider">
-        <batchlet ref="myBatchlet"/>
-    </step>
-
-    <decision id="myUpperOrLowerDecider" ref="myBatchUpperOrLowerDecider">
-        <next on="lower" to="myToUpperCaseStep"/>
-        <next on="UPPER" to="myToLowerCaseStep"/>
-    </decision>
-
-    <step id="myToLowerCaseStep">
-        <listeners>
-            <listener ref="myChunkStepListener" />
-        </listeners>
-        <chunk>
-            <reader ref="myBatchUpperCaseItemReader"/>
-            <processor ref="myBatchItemToLowerCaseProcessor"/>
-            <writer ref="myBatchItemWriter"/>
-        </chunk>
-    </step>
-
-    <step id="myToUpperCaseStep">
-        <listeners>
-            <listener ref="myChunkStepListener" />
-        </listeners>
-        <chunk>
-            <reader ref="myBatchLowerCaseItemReader"/>
-            <processor ref="myBatchItemToUpperCaseProcessor"/>
-            <writer ref="myBatchItemWriter"/>
-        </chunk>
-    </step>
 
 </job>
