@@ -17,12 +17,10 @@ public class MyBatchUpperCaseItemReader extends AbstractItemReader {
 
     @Override
     public Object readItem() throws Exception {
-        Persoon persoon = entityManager.createNamedQuery(Persoon.QRY_FIND_UPPERCASE_NAMEN, Persoon.class)
+        return entityManager.createNamedQuery(Persoon.QRY_FIND_UPPERCASE_NAMEN, Persoon.class)
                 .setMaxResults(1)
                 .getResultList()
                 .stream()
                 .findAny().orElse(null);
-        log.info(persoon);
-        return persoon;
     }
 }
