@@ -10,15 +10,14 @@ import javax.persistence.PersistenceContext;
 
 @Log4j2
 @Named
-public class MyBatchUppercaseItemReader extends AbstractItemReader {
+public class MyBatchUpperCaseItemReader extends AbstractItemReader {
 
     @PersistenceContext(name = "pu-java-batch")
     private EntityManager entityManager;
 
     @Override
     public Object readItem() throws Exception {
-        Persoon persoon = entityManager.createQuery("select p from Persoon p where p.naam = " +
-                "(select upper(pp.naam) from Persoon pp where p.id = pp.id)", Persoon.class)
+        Persoon persoon = entityManager.createNamedQuery(Persoon.QRY_FIND_UPPERCASE_NAMEN, Persoon.class)
                 .setMaxResults(1)
                 .getResultList()
                 .stream()
