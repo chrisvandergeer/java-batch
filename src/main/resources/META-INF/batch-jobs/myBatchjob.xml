@@ -1,0 +1,11 @@
+<job id="myBatchjob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+
+    <step id="myToLowercaseStep">
+        <chunk>
+            <reader ref="myBatchUppercaseItemReader" />
+            <processor ref="myBatchItemToLowerCaseProcessor" />
+            <writer ref="myBatchItemWriter" />
+        </chunk>
+    </step>
+
+</job>
