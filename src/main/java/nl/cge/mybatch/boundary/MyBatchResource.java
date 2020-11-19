@@ -27,6 +27,13 @@ public class MyBatchResource {
     @PersistenceContext(name = "pu-java-batch")
     private EntityManager entityManager;
 
+    @POST
+    public Response startMyJob() {
+        JobOperator jobOperator = BatchRuntime.getJobOperator();
+        jobOperator.start("myBatchjob", new Properties());
+        return getJobInfo();
+    }
+
     @GET
     public Response getJobInfo() {
         JobOperator jobOperator = BatchRuntime.getJobOperator();
