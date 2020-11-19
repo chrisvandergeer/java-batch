@@ -10,6 +10,9 @@
     </decision>
 
     <step id="persoonToLowerCaseStep">
+        <listeners>
+            <listener ref="myStepListener"/>
+        </listeners>
         <chunk>
             <reader ref="persoonUpperCaseItemReader"/>
             <processor ref="persoonToLowerCaseProcessor"/>
@@ -18,6 +21,9 @@
     </step>
 
     <step id="persoonToUpperCaseStep">
+        <listeners>
+            <listener ref="myStepListener"/>
+        </listeners>
         <chunk>
             <reader ref="persoonLowerCaseItemReader"/>
             <processor ref="persoonToUpperCaseProcessor"/>
