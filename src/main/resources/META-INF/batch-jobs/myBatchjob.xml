@@ -1,7 +1,15 @@
 <job id="myBatchjob" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
 
-    <step id="myStep">
-        <batchlet ref="myBatchlet"/>
+<!--    <step id="myStep">-->
+<!--        <batchlet ref="myBatchlet"/>-->
+<!--    </step>-->
+
+    <step id="persoonToLowerCaseStep">
+        <chunk>
+            <reader ref="persoonUpperCaseItemReader"/>
+            <processor ref="persoonToLowerCaseProcessor"/>
+            <writer ref="persoonItemWriter"/>
+        </chunk>
     </step>
 
 </job>
