@@ -50,10 +50,10 @@ public class MyBatchResource {
     static class JobExecutionDto {
         private String jobName;
         private Long executionId;
-        private Date createTime;
-        private Date startTime;
-        private Date endTime;
-        private Date lastUpdatedTime;
+        private String createTime;
+        private String startTime;
+        private String endTime;
+        private String lastUpdatedTime;
         private String batchStatus;
         private String exitStatus;
         private Map<String, String> jobParameters = new HashMap<>();
@@ -62,10 +62,10 @@ public class MyBatchResource {
             JobExecutionDto dto = new JobExecutionDto();
             dto.setJobName(jobExecution.getJobName());
             dto.setExecutionId(jobExecution.getExecutionId());
-            dto.setCreateTime(jobExecution.getCreateTime());
-            dto.setStartTime(jobExecution.getStartTime());
-            dto.setEndTime(jobExecution.getEndTime());
-            dto.setLastUpdatedTime(jobExecution.getLastUpdatedTime());
+            dto.setCreateTime(jobExecution.getCreateTime().toString());
+            dto.setStartTime(jobExecution.getStartTime().toString());
+            dto.setEndTime(jobExecution.getEndTime().toString());
+            dto.setLastUpdatedTime(jobExecution.getLastUpdatedTime().toString());
             dto.setBatchStatus(jobExecution.getBatchStatus().toString());
             dto.setExitStatus(jobExecution.getExitStatus());
             Map<String, String> jobParameters = jobExecution.getJobParameters().entrySet().stream()
