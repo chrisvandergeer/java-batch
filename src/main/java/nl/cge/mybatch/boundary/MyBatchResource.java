@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
+import static java.util.Optional.*;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -62,11 +63,11 @@ public class MyBatchResource {
             JobExecutionDto dto = new JobExecutionDto();
             dto.setJobName(jobExecution.getJobName());
             dto.setExecutionId(jobExecution.getExecutionId());
-            dto.setCreateTime(jobExecution.getCreateTime().toString());
-            dto.setStartTime(jobExecution.getStartTime().toString());
-            dto.setEndTime(jobExecution.getEndTime().toString());
-            dto.setLastUpdatedTime(jobExecution.getLastUpdatedTime().toString());
-            dto.setBatchStatus(jobExecution.getBatchStatus().toString());
+            ofNullable(jobExecution.getCreateTime()).ifPresent(t -> dto.setCreateTime(t.toString()));
+            ofNullable(jobExecution.getStartTime()).ifPresent(t -> dto.setStartTime(t.toString()));
+            ofNullable(jobExecution.getEndTime()).ifPresent(t -> dto.setEndTime(t.toString()));
+            ofNullable(jobExecution.getLastUpdatedTime()).ifPresent(t -> dto.setLastUpdatedTime(t.toString()));
+            ofNullable(jobExecution.getBatchStatus()).ifPresent(s -> dto.setBatchStatus(s.toString()));
             dto.setExitStatus(jobExecution.getExitStatus());
             Map<String, String> jobParameters = jobExecution.getJobParameters().entrySet().stream()
                     .collect(toMap(e -> e.getKey().toString(), e -> e.getValue().toString()));
